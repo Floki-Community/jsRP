@@ -3,6 +3,7 @@ game 'gta5'
 
 author 'FlokiTV'
 version '1.0.0'
+resource_type 'gametype' { name = 'jsrp' }
 
 -- https://github.com/citizenfx/fivem/issues/1696
 dependencies {
@@ -23,6 +24,7 @@ shared_scripts {
 }
 
 client_scripts {
+	'import/controllers/**/client.js',
 	'import/rpc/client.js',
 	'import/request/client.js',
 	-- 'import/requestModel/client.js',
@@ -32,6 +34,8 @@ client_scripts {
 }
 
 server_scripts {
+	'import/controllers/**/server.js',
+	'import/managers/*.js',
 	'import/rpc/server.js',
 	'import/request/server.js',
     'resource/**/server.js',
