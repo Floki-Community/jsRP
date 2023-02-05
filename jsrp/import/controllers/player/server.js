@@ -17,7 +17,10 @@ class PlayerController extends PedController{
         SetPlayerRoutingBucket(this.playerSrc, n);
     }
     getBucket() {
-        GetPlayerRoutingBucket(this.playerSrc);
+        return GetPlayerRoutingBucket(this.playerSrc);
+    }
+    getMaxArmour(){
+        return GetPlayerMaxArmour(this.playerSrc)
     }
     identifiers() {
         return $lib.parseIdentifiers(this.playerSrc);

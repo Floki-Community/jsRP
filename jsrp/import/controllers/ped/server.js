@@ -4,8 +4,14 @@ class PedController{
     constructor(pedId){
         this.id = pedId
     }
-    getHealth(){
-        return GetEntityHealth(this.id)
+    getHealth(percent = false){
+        return GetEntityHealth(this.id) - (percent?100:0)
+    }
+    getMaxHealth(percent = false){
+        return GetEntityMaxHealth(this.id) - (percent?100:0)
+    }
+    getArmour(){
+        return GetPedArmour(this.id)
     }
     setArmour(amount){
         SetPedArmour(this.id, amount)
