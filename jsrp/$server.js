@@ -1,4 +1,5 @@
 const resource = GetCurrentResourceName()
+const root = GetResourcePath(resource);
 const $ = exports['jsrp'].$()
 
 const $onRequest = (action, cb) =>{

@@ -34,6 +34,6 @@ class VehicleManager {
     }
 }
 
-$lib.Vehicles = new VehicleManager();
-
+// $lib.Vehicles = new VehicleManager();
 $loadClass("Vehicles", VehicleManager);
+

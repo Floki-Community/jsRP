@@ -2,7 +2,6 @@ const resource = GetCurrentResourceName()
 const $ = exports['jsrp'].$()
 
 const $request = (action, args = []) => {
-    console.log("$request")
     return $.request(resource, action, args)
 }
 

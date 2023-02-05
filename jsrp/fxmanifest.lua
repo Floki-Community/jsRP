@@ -11,6 +11,12 @@ dependencies {
     '/onesync',
 }
 
+files {
+	"index.html"
+}
+
+ui_page "index.html"
+
 shared_script 'resource/init.js' -- shared $lib
 
 files{

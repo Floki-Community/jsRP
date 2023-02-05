@@ -11,7 +11,7 @@ class PlayerManager {
         this.players.delete(player.lisence);
     }
     getPlayerBySrc(src) {
-        let ids = $.parseIdentifiers(src)
+        let ids = $lib.parseIdentifiers(src)
         return this.players.get(ids.license2);
     }
     getPlayerById(id) {
@@ -32,11 +32,11 @@ on("playerJoining", async (source, oldID) => {
         source: pc.src(),
         ped: pc.ped()
     })
-    console.log("[playerManager][playerJoining] ", source, player)
+    console.log("[playerManager][playerJoining]", source, player)
 })
 
 on("playerDropped", async (reason) => {
     const player = $lib.Players.getPlayerBySrc(global.source);
-    console.log("playerDropped", player, reason)
     $lib.Players.removePlayer(player)
+    console.log("[playerManager][playerDropped]", player, reason)
 })

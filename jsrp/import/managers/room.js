@@ -11,6 +11,12 @@ class RoomManager {
     id() {
         return this._id += 1
     }
+    getAllRooms(){
+        return this.rooms
+    }
+    getRooms(roomType){
+        return this.rooms[roomType]
+    }
     defineRoom(roomType, minPlayers, maxPlayers, events = {}, tickFn, tick = 1000) {
         this.roomDefinition[roomType] = {
             min: minPlayers,
@@ -24,7 +30,7 @@ class RoomManager {
         const roomId = this.id();
         this.rooms[roomType] = this.rooms[roomType] || [];
         const { tick, tickFn, events } = this.roomDefinition[roomType]
-        this.rooms[roomType].push({ roomId, roomType, players: [], tick: setInterval(() => tickFn(roomId), tick) });
+        this.rooms[roomType].push({ roomId, roomType, players: [], tick: setInterval(() => tickFn(this.findRoom(roomId)), tick) });
         this.callbacks[roomId] = { ...events };
         if (this.callbacks[roomId].onCreate) {
             this.callbacks[roomId].onCreate({ roomId, roomType });
@@ -72,7 +78,7 @@ class RoomManager {
         for (const roomType in this.queue) {
             const queue = this.queue[roomType];
             let check = queue.filter(p => p == player)
-            return check
+            return check.length ? check[0] : false
         }
         return false;
     }

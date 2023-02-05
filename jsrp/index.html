@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        const CFG = {
+            RES_NAME: "",
+            debug: false,
+            css: [""],
+            events: {},
+            nui: {}
+        };
+        function resource(name) {
+            CFG.RES_NAME = name;
+        }
+        function debug(on) {
+            CFG.debug = on;
+        }
+        function log(...args) {
+            if (CFG.debug) console.log(args);
+        }
+        function addHTML(name, html) {
+            CFG.nui[name] = {
+                html
+            };
+            let el = document.createElement('div')
+            el.id = "NUI_"+name
+            el.classList.add('w-full')
+            el.classList.add('h-screen')
+            el.classList.add('absolute')
+            el.classList.add('top-0')
+            el.classList.add('left-0')
+            el.innerHTML = html
+            NUI_MAIN.appendChild(el)
+            let scr = el.querySelector('script')
+            if(scr) eval.call(this, scr.innerText)
+        };
+        function rmHTML(name) {
+            let el = document.querySelector("#NUI_"+name)
+            if(el) el.remove()
+            delete CFG.nui[name];
+        };
+        function addCSS(link) {
+            let find = CFG.css.filter((lnk) => lnk == link);
+            if (!find.length) {
+                log("addCSS");
+                let element = document.createElement("link");
+                element.setAttribute("rel", "stylesheet");
+                element.setAttribute("type", "text/css");
+                element.setAttribute("href", link);
+                CFG.css.push(link);
+                document.getElementsByTagName("head")[0].appendChild(element);
+            }
+        }
+        function addScript(src, callback = false) {
+            var s = document.createElement("script");
+            s.setAttribute("src", src);
+            if (callback) s.onload = callback;
+            document.body.appendChild(s);
+        }
+        /*
+            callbacks
+        */
+        async function emit(path, data = {}) {
+            return await fetch(`https://${CFG.RES_NAME}/${path}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify(data),
+            })
+                .then((resp) => resp.text())
+                .then((resp) => log(resp));
+        }
+        function on(event, cb) {
+            CFG.events[event] = cb;
+            return;
+        }
+        function setup(fn = {}) {
+            const body = document.querySelector("body");
+            window.addEventListener("message", function (event) {
+                if (event.data.show != undefined) {
+                    let status = event.data.show;
+                    if (status) {
+                        // body.style.display = "block";
+                        body.style.opacity = 1;
+                    } else {
+                        // body.style.display = "none";
+                        body.style.opacity = 0;
+                    }
+                }
+                if (event.data.addcss != undefined) {
+                    addCSS(event.data.addcss);
+                }
+                if (event.data.addscript != undefined) {
+                    addScript(event.data.addscript);
+                }
+                Object.keys(CFG.events).forEach((ev) => {
+                    if (event.data[ev] != undefined) {
+                        log("trigger on " + ev);
+                        CFG.events[ev](event.data[ev]);
+                    }
+                });
+                // From setup
+                Object.keys(fn).forEach((ev) => {
+                    if (event.data[ev] != undefined) {
+                        log("trigger " + ev);
+                        fn[ev](event.data[ev]);
+                    }
+                });
+            });
+        }
+        /*
+            client-side
+        */
+        resource("jsrp");
+        setup({
+            hide_all: () => {
+                NUI_MAIN.classList.add("opacity-0")
+                NUI_MAIN.classList.remove("opacity-100")
+            },
+            show_all: () => {
+                NUI_MAIN.classList.add("opacity-100")
+                NUI_MAIN.classList.remove("opacity-0")
+            },
+            hide_loading: () => {
+                NUI_LOADING.classList.add("opacity-0")
+                NUI_LOADING.classList.remove("opacity-100")
+                NUI_LOADING.classList.add("pointer-events-none")
+            },
+            show_loading: () => {
+                NUI_LOADING.classList.add("opacity-100")
+                NUI_LOADING.classList.remove("pointer-events-none")
+                NUI_LOADING.classList.remove("opacity-0")
+            },
+            toggle_all: () => {
+                if (NUI_MAIN.classList.contains("opacity-100")) {
+                    NUI_MAIN.classList.add("opacity-0")
+                    NUI_MAIN.classList.remove("opacity-100")
+                }
+                else {
+                    NUI_MAIN.classList.add("opacity-100")
+                    NUI_MAIN.classList.remove("opacity-0")
+                }
+            },
+            addHTML: (args) =>{
+                rmHTML(args.name);
+                addHTML(args.name, args.html);
+            },
+            rmHTML: (args) =>{
+                rmHTML(args.name, args.html);
+            }
+        });
+    </script>
+</head>
+
+<body class="h-screen transition-all duration-500" id="NUI_MAIN">
+    <div id="NUI_LOADING"
+        class="absolute z-50 w-full h-full overflow-hidden bg-zinc-900 pointer-events-none transition-all duration-500">
+    </div>
+</body>
+
+</html>

@@ -1,8 +1,14 @@
 log("[PlayerController]");
-
-class PlayerController {
+/*
+    TODO: GetCurrentResourceName on constructor
+*/
+class PlayerController extends PedController{
     constructor(playerSrc) {
+        super(GetPlayerPed(playerSrc))
         this.playerSrc = playerSrc
+    }
+    async rpc(method, ...args){
+        return await $lib.rpc(this.playerSrc, method, args)
     }
     emit(resource, action, ...args) {
         emitNet(`${resource}:${action}`, this.src(), args)
