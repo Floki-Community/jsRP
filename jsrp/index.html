@@ -29,7 +29,7 @@
                 html
             };
             let el = document.createElement('div')
-            el.id = "NUI_"+name
+            el.id = "NUI_" + name
             el.classList.add('w-full')
             el.classList.add('h-screen')
             el.classList.add('absolute')
@@ -38,11 +38,11 @@
             el.innerHTML = html
             NUI_MAIN.appendChild(el)
             let scr = el.querySelector('script')
-            if(scr) eval.call(this, scr.innerText)
+            if (scr) eval.call(this, scr.innerText)
         };
         function rmHTML(name) {
-            let el = document.querySelector("#NUI_"+name)
-            if(el) el.remove()
+            let el = document.querySelector("#NUI_" + name)
+            if (el) el.remove()
             delete CFG.nui[name];
         };
         function addCSS(link) {
@@ -148,11 +148,11 @@
                     NUI_MAIN.classList.remove("opacity-0")
                 }
             },
-            addHTML: (args) =>{
+            addHTML: (args) => {
                 rmHTML(args.name);
                 addHTML(args.name, args.html);
             },
-            rmHTML: (args) =>{
+            rmHTML: (args) => {
                 rmHTML(args.name, args.html);
             }
         });
@@ -161,8 +161,20 @@
 
 <body class="h-screen transition-all duration-500" id="NUI_MAIN">
     <div id="NUI_LOADING"
-        class="absolute z-50 w-full h-full overflow-hidden bg-zinc-900 pointer-events-none transition-all duration-500">
-    </div>
+        class="pointer-events-none absolute z-50 h-full w-full overflow-hidden bg-zinc-900 transition-all duration-500">
+        <div type="div"
+            class="absolute right-4 bottom-4 inline-flex items-center px-4 py-1 font-semibold leading-6 text-sm shadow text-white bg-zinc-500  transition ease-in-out duration-150 cursor-not-allowed"
+            disabled="">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+            Loading...
+            </button>
+        </div>
 </body>
 
 </html>
