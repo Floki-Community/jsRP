@@ -4,6 +4,9 @@ class PedController{
     constructor(pedId){
         this.id = pedId
     }
+    owner(){
+        return NetworkGetEntityOwner(this.id)
+    }
     getHealth(percent = false){
         return GetEntityHealth(this.id) - (percent?100:0)
     }
