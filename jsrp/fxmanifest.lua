@@ -44,6 +44,7 @@ server_scripts {
 	'import/managers/*.js',
 	'import/rpc/server.js',
 	'import/request/server.js',
+    'resource/**/server.lua',
     'resource/**/server.js',
     'resource/**/server/*.js'
 }

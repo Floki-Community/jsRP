@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI</title>
+    <script>
+        _warn = console.warn
+        console.warn = (...args) => { return }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         const CFG = {
@@ -15,6 +19,7 @@
             events: {},
             nui: {}
         };
+        const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
         function resource(name) {
             CFG.RES_NAME = name;
         }
@@ -119,6 +124,11 @@
             client-side
         */
         resource("jsrp");
+        const imgs = [
+            'https://cdn.discordapp.com/attachments/1037815194384085063/1072152159828840588/GTA_V_Artwork_BeachBum_PNG-7405-1600.png',
+            'https://cdn.discordapp.com/attachments/1037815194384085063/1072152160776761456/gtaonline-highlife-artwork-png-8896-1600.png',
+            'https://cdn.discordapp.com/attachments/1037815194384085063/1072152495268307024/gtao-artwork-lowriders-png6-8600-1600.png'
+        ];
         setup({
             hide_all: () => {
                 NUI_MAIN.classList.add("opacity-0")
@@ -134,6 +144,11 @@
                 NUI_LOADING.classList.add("pointer-events-none")
             },
             show_loading: () => {
+                NUI_LOADING.querySelector("img").add("opacity-0")
+                NUI_LOADING.querySelector("img").setAttribute("src", imgs[randomInt(0, 2)])
+                setTimeout(()=>{
+                    NUI_LOADING.querySelector("img").remove("opacity-0")
+                }, 500)
                 NUI_LOADING.classList.add("opacity-100")
                 NUI_LOADING.classList.remove("pointer-events-none")
                 NUI_LOADING.classList.remove("opacity-0")
@@ -162,6 +177,8 @@
 <body class="h-screen transition-all duration-500" id="NUI_MAIN">
     <div id="NUI_LOADING"
         class="pointer-events-none absolute z-50 h-full w-full overflow-hidden bg-zinc-900 transition-all duration-500">
+        <img src="https://cdn.discordapp.com/attachments/1037815194384085063/1072152159828840588/GTA_V_Artwork_BeachBum_PNG-7405-1600.png"
+            class="absolute bottom-0 -left-[300px] max-w-[1200px] transition-all duration-1000">
         <div type="div"
             class="absolute right-4 bottom-4 inline-flex items-center px-4 py-1 font-semibold leading-6 text-sm shadow text-white bg-zinc-500  transition ease-in-out duration-150 cursor-not-allowed"
             disabled="">

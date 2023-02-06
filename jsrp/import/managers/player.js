@@ -40,3 +40,16 @@ on("playerDropped", async (reason) => {
     $lib.Players.removePlayer(player)
     console.log("[playerManager][playerDropped]", player, reason)
 })
+
+/*
+    todo:
+        replace players on restart resource
+*/
+function onResourceStop(resource) {
+    if (resource !== GetCurrentResourceName()) {
+      return;
+    }
+    console.log("----------")
+    console.log(GetNumPlayerIndices())
+}
+on("resourceStop", onResourceStop) 
