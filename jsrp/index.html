@@ -144,10 +144,10 @@
                 NUI_LOADING.classList.add("pointer-events-none")
             },
             show_loading: () => {
-                NUI_LOADING.querySelector("img").add("opacity-0")
+                NUI_LOADING.querySelector("img").classList.add("opacity-0")
                 NUI_LOADING.querySelector("img").setAttribute("src", imgs[randomInt(0, 2)])
                 setTimeout(()=>{
-                    NUI_LOADING.querySelector("img").remove("opacity-0")
+                    NUI_LOADING.querySelector("img").classList.remove("opacity-0")
                 }, 500)
                 NUI_LOADING.classList.add("opacity-100")
                 NUI_LOADING.classList.remove("pointer-events-none")
