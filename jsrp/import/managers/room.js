@@ -11,10 +11,10 @@ class RoomManager {
     id() {
         return this._id += 1
     }
-    getAllRooms(){
+    getAllRooms() {
         return this.rooms
     }
-    getRooms(roomType){
+    getRooms(roomType) {
         return this.rooms[roomType]
     }
     defineRoom(roomType, minPlayers, maxPlayers, events = {}, tickFn, tick = 1000) {
@@ -100,6 +100,9 @@ class RoomManager {
                 this.roomDefinition[roomType].events.onLeaveQueue({ roomType, player });
             }
         }
+    }
+    getQueue(roomType) {
+        return this.queue[roomType] || []
     }
     removePlayerFromRoom(roomId, player) {
         const room = this.findRoom(roomId);
