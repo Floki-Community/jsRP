@@ -8,4 +8,3 @@ const parseIdentifiers = (player) => {
 };
 
 $lib.parseIdentifiers = parseIdentifiers
-// $lib.getPlayers = exports.jsrp.GetPlayers

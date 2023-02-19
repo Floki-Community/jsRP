@@ -42,5 +42,4 @@ class PedController{
     }
 }
 
-$lib.PedController = PedController
 $lib.Ped = $exportClass(PedController);

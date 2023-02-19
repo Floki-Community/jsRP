@@ -25,7 +25,7 @@ class VehicleManager {
         }
     }
     clearAll() {
-        console.log("Cleaning " + this.vehicles.length)
+        log("Cleaning " + this.vehicles.length)
         for (let index = 0; index < this.vehicles.length; index++) {
             let vehicle = this.get(this.vehicles[index])
             DeleteEntity(vehicle.entity)
@@ -34,6 +34,5 @@ class VehicleManager {
     }
 }
 
-// $lib.Vehicles = new VehicleManager();
 $loadClass("Vehicles", VehicleManager);
 

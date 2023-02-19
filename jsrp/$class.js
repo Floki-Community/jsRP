@@ -1,25 +1,6 @@
-const $lib = {
-    debug: true,
-}
-
-const log = (...args)=>{
-    if($lib.debug) console.log(...args);
-}
-
-$lib.log = log
-
-$lib.exports = (name, fn)=>{
-    $lib[name] = fn
-}
-
-exports("$", ()=>{
-    return {
-        ...$lib
-    }
-});
 /*
     ☢ test zone
-*/ 
+*/
 function getClassMethods(className) {
     if (!className instanceof Object)
         throw new Error("Not a class");
@@ -41,20 +22,22 @@ function getClassMethods(className) {
     return Array.from(ret);
 }
 
-const $loadClass = (name, clas, ...args) =>{
-    if($lib[name]) return
+const $lib = {}
+
+const $loadClass = (name, clas, ...args) => {
+    if ($[name]) return
     let list = getClassMethods(clas)
-    $lib[`_${name}`] = new clas(...args)
-    let c = $lib[`_${name}`]
+    let c = new clas(...args)
     $lib[name] = {}
     for (let index = 0; index < list.length; index++) {
         const fn = list[index];
         $lib[name][fn] = (...args) => c[fn](...args)
     }
+    $exports(name, { ...$lib[name] })
 }
 
-const $exportClass = (clas) =>{
-    return (...args) =>{
+const $exportClass = (name, clas) => {
+    $exports(name, (...args) => {
         let p = new clas(...args)
         let l = getClassMethods(clas)
         let r = {}
@@ -63,5 +46,5 @@ const $exportClass = (clas) =>{
             r[fn] = (...args) => p[fn](...args)
         }
         return r
-    }
+    })
 }

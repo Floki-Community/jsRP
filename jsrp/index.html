@@ -146,7 +146,7 @@
             show_loading: () => {
                 NUI_LOADING.querySelector("img").classList.add("opacity-0")
                 NUI_LOADING.querySelector("img").setAttribute("src", imgs[randomInt(0, 2)])
-                setTimeout(()=>{
+                setTimeout(() => {
                     NUI_LOADING.querySelector("img").classList.remove("opacity-0")
                 }, 500)
                 NUI_LOADING.classList.add("opacity-100")
@@ -163,6 +163,9 @@
                     NUI_MAIN.classList.remove("opacity-0")
                 }
             },
+            /*
+                HTML
+            */
             addHTML: (args) => {
                 rmHTML(args.name);
                 addHTML(args.name, args.html);
@@ -176,7 +179,7 @@
 
 <body class="h-screen transition-all duration-500" id="NUI_MAIN">
     <div id="NUI_LOADING"
-        class="pointer-events-none absolute z-50 h-full w-full overflow-hidden bg-zinc-900 transition-all duration-500">
+        class="pointer-events-none opacity-0 absolute z-50 h-full w-full overflow-hidden bg-zinc-900 transition-all duration-500">
         <img src="https://cdn.discordapp.com/attachments/1037815194384085063/1072152159828840588/GTA_V_Artwork_BeachBum_PNG-7405-1600.png"
             class="absolute bottom-0 -left-[300px] max-w-[1200px] transition-all duration-1000">
         <div type="div"
@@ -192,6 +195,7 @@
             Loading...
             </button>
         </div>
+    </div>
 </body>
 
 </html>

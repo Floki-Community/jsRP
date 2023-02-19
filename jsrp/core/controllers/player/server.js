@@ -7,8 +7,8 @@ class PlayerController extends PedController{
         super(GetPlayerPed(playerSrc))
         this.playerSrc = playerSrc
     }
-    async rpc(method, ...args){
-        return await $lib.rpc(this.playerSrc, method, args)
+    async RPC(method, ...args){
+        return await $lib.RPC(this.playerSrc, method, args)
     }
     emit(resource, action, ...args) {
         emitNet(`${resource}:${action}`, this.src(), args)
@@ -31,7 +31,7 @@ class PlayerController extends PedController{
     ped() {
         return GetPlayerPed(this.playerSrc);
     }
-    lisence(key = "license2") {
+    license(key = "license2") {
         return this.identifiers()[key];
     }
     nId() {
@@ -41,7 +41,5 @@ class PlayerController extends PedController{
         return NetworkGetEntityFromNetworkId(this.nId());
     }
 }
-
-$lib.PlayerController = PlayerController
 
 $lib.Player = $exportClass(PlayerController);

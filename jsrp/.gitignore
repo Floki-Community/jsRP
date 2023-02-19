@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+_disable*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

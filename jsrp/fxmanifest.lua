@@ -1,4 +1,4 @@
-fx_version 'bodacious'
+fx_version 'cerulean'
 game 'gta5'
 
 author 'FlokiTV'
@@ -21,30 +21,33 @@ shared_script 'resource/init.js' -- shared $lib
 
 files{
     '$client.js', -- inject jsrp on $
-    '$server.js' -- inject jsrp on $
+    '$server.js', -- inject jsrp on $
+    '$class.js', -- jsrp class helpers
 }
 
 shared_scripts {
+    'resource/**/shared.lua',
+    'resource/**/shared/*.lua',
     'resource/**/shared.js',
     'resource/**/shared/*.js'
 }
 
 client_scripts {
-	'import/controllers/**/client.js',
-	'import/rpc/client.js',
-	'import/request/client.js',
-	-- 'import/requestModel/client.js',
-	-- 'import/requestAnimDict/client.js',
+	'core/controllers/**/client.js',
+	'core/rpc/client.js',
+	'core/request/client.js',
     'resource/**/client.js',
-    'resource/**/client/*.js'
+    'resource/**/client/*.js',
+    'resource/done.js'
 }
 
 server_scripts {
-	'import/controllers/**/server.js',
-	'import/managers/*.js',
-	'import/rpc/server.js',
-	'import/request/server.js',
+	'core/controllers/**/server.js',
+	'core/managers/*.js',
+	'core/rpc/server.js',
+	'core/request/server.js',
     'resource/**/server.lua',
     'resource/**/server.js',
-    'resource/**/server/*.js'
+    'resource/**/server/*.js',
+    'resource/done.js'
 }

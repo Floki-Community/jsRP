@@ -5,10 +5,10 @@ class PlayerManager {
         this.players = new Map();
     }
     addPlayer(player) {
-        this.players.set(player.lisence, player);
+        this.players.set(player.license, player);
     }
     removePlayer(player) {
-        this.players.delete(player.lisence);
+        this.players.delete(player.license);
     }
     getPlayerBySrc(src) {
         let ids = $lib.parseIdentifiers(src)
@@ -26,19 +26,19 @@ $loadClass("Players", PlayerManager);
 
 on("playerJoining", async (source, oldID) => {
     const player = global.source;
-    const pc = new $lib.PlayerController(player)
+    const pc = new PlayerController(player)
     $lib.Players.addPlayer({
-        lisence: pc.lisence(),
+        license: pc.license(),
         source: pc.src(),
         ped: pc.ped()
     })
-    console.log("[playerManager][playerJoining]", source, player)
+    log("[playerManager][playerJoining]", source, player)
 })
 
 on("playerDropped", async (reason) => {
     const player = $lib.Players.getPlayerBySrc(global.source);
     $lib.Players.removePlayer(player)
-    console.log("[playerManager][playerDropped]", player, reason)
+    log("[playerManager][playerDropped]", player, reason)
 })
 
 /*
@@ -49,7 +49,7 @@ function onResourceStop(resource) {
     if (resource !== GetCurrentResourceName()) {
       return;
     }
-    console.log("----------")
-    console.log(GetNumPlayerIndices())
+    log("----------")
+    log(GetNumPlayerIndices())
 }
 on("resourceStop", onResourceStop) 
