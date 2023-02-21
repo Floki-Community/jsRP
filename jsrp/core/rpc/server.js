@@ -15,10 +15,10 @@ $lib.RPC = (source, method, params = []) =>{
     });
 }
 
-$lib.RPCSetTick = (source, name, rpcArray) =>{
-    emitNet(`jsrp:rpc:setTick`, source, name, rpcArray);
+$lib.RPCSetTick = (resource, source, name, rpcArray) =>{
+    emitNet(`${resource}:rpc:setTick`, source, name, rpcArray);
 }
 
-$lib.RPCRemoveTick = (source, name) =>{
-    emitNet(`jsrp:rpc:removeTick`, source, name);
+$lib.RPCRemoveTick = (resource, source, name) =>{
+    emitNet(`${resource}:rpc:removeTick`, source, name);
 }

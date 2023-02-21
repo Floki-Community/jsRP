@@ -21,6 +21,13 @@ const $emit = (source, method, ...args) => {
     emitNet(`${resource}:${method}`, source, args)
 }
 
+const $RPCSetTick = (source, name, rpcArray) =>{
+    $.RPCSetTick(resource, source, name, rpcArray)
+}
+const $RPCRemoveTick = (source, name, rpcArray) =>{
+    $.RPCRemoveTick(resource, source, name, rpcArray)
+}
+
 const $exports = (name, fn) => {
     $.exports(name, fn)
     on("jsrp-ready", () =>{

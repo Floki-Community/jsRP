@@ -2,6 +2,25 @@ const resource = GetCurrentResourceName()
 let $ = exports['jsrp'].$()
 let $onLua = exports.jsrp.onLua
 
+const TICKS = {}
+
+onNet(`${resource}:rpc:setTick`, async (name, rpcArray) => {
+    if(TICKS[name]){
+        clearTick(TICKS[name])
+    }
+    TICKS[name] = setTick(()=>{
+        for (let i = 0; i < rpcArray.length; i++) {
+            const {method, params} = rpcArray[i];
+            if(this[method])
+                this[method](...params);
+        }
+    })
+})
+
+onNet(`${resource}:rpc:removeTick`, async (name) => {
+    clearTick(TICKS[name])
+})
+
 const $request = (action, args = []) => {
     return $.request(resource, action, args)
 }
