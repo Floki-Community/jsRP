@@ -1,3 +1,5 @@
+const responseList = {}
+
 function request(resource, action, args = []){
     let event = `${resource}:${action}`;
     const source = GetPlayerServerId(PlayerId());
@@ -7,11 +9,18 @@ function request(resource, action, args = []){
             source: source,
             args: args,
         });
-        onNet(`${event}:response`, (res) => {
-            log(`[RES] ${source} ${event} DONE`);
-            log(res)
-            resolve(res);
-        });
+        if (responseList[event]) {
+            log("[RES] OLD " + event);
+            responseList[event] = `${event}:response`
+        } else {
+            log("[RES] NEW " + event);
+            responseList[event] = `${event}:response`
+            onNet(`${event}:response`, (res) => {
+                log(`[RES] ${source} ${event} DONE`);
+                // responseList[event](source, args)
+                resolve(res);
+            });
+        }
         setTimeout(()=>{
             resolve({
                 error: true,
