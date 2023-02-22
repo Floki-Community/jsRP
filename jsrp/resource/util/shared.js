@@ -1,8 +1,8 @@
 $lib.delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-$lib.short_uuid = () => {
+$lib.shortUUID = () => {
     var dt = new Date().getTime();
-    var uuid = 'xx4xyx-xx'.replace(/[xy]/g, function (c) {
+    var uuid = 'xxFx-xx'.replace(/[xy]/g, function (c) {
         var r = (dt + Math.random() * 16) % 16 | 0;
         dt = Math.floor(dt / 16);
         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
@@ -10,7 +10,7 @@ $lib.short_uuid = () => {
     return uuid;
 }
 
-$lib.uuid = () => {
+$lib.UUID = () => {
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = (dt + Math.random() * 16) % 16 | 0;
