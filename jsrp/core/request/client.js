@@ -7,7 +7,6 @@ function response(event) {
     responseList[event] = [];
     onNet(`${event}:response`, (res) => {
       log(`[RES] ${source} ${event} DONE`);
-      console.log(res);
       responseList[event].push(res);
     });
   }
