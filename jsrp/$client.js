@@ -21,8 +21,8 @@ onNet(`${resource}:rpc:removeTick`, async (name) => {
     clearTick(TICKS[name])
 })
 
-const $request = (action, args = []) => {
-    return $.request(resource, action, args)
+const $request = async (action, args = []) => {
+    return await $.request(resource, action, args)
 }
 
 const $on = (method, cb)=>{

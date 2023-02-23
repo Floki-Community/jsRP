@@ -1,7 +1,10 @@
-const response = (source, resource, action, args = []) => {
+const response = (source, resource, action, args = [], ts) => {
     let event = `${resource}:${action}:response`;
     log("[RES] " + source + " " + event);
-    emitNet(event, source, args);
+    emitNet(event, source, {
+        data: args,
+        id: ts
+    });
 };
 $lib.response = response
 
@@ -15,17 +18,11 @@ $lib.onRequest = (name, action, cb) => {
     } else {
         log("[REQ] NEW " + event);
         requestList[event] = cb
-        onNet(event, (data) => {
-            let { source, args } = data
-            let res = requestList[event](source, args);
+        onNet(event, async (data) => {
+            let { source, args, ts } = data
+            let res = await requestList[event](source, args);
             log("[REQ] " + source + " " + event);
-            if (res instanceof Promise) {
-                res.then((re) => {
-                    response(source, name, action, re);
-                });
-            } else {
-                if (res != null) response(source, name, action, res);
-            }
+            response(source, name, action, res, ts);
         });
     }
 };
