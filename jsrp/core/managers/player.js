@@ -49,7 +49,5 @@ function onResourceStop(resource) {
     if (resource !== GetCurrentResourceName()) {
       return;
     }
-    log("----------")
-    log(GetNumPlayerIndices())
 }
 on("resourceStop", onResourceStop) 
